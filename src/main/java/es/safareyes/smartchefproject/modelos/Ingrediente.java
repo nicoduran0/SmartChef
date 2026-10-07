@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Ingrediente {
 
     @Id
@@ -26,11 +25,9 @@ public class Ingrediente {
     private UnidadMedida unidad;
 
     @Column(nullable = false, precision = 10, scale = 4)
-    @Builder.Default
     private BigDecimal calorias = BigDecimal.ZERO;
 
     @Column(nullable = false, precision = 10, scale = 4)
-    @Builder.Default
     private BigDecimal precio = BigDecimal.ZERO;
 
     @Column(nullable = false)

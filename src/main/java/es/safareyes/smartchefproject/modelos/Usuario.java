@@ -2,6 +2,9 @@ package es.safareyes.smartchefproject.modelos;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -9,11 +12,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "usuarios")
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString(exclude = {"contrasena", "preferencias"})
 public class Usuario {
 
@@ -32,12 +35,13 @@ public class Usuario {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    @Builder.Default
     private Rol rol = Rol.USUARIO;
 
+    @CreatedDate
     @Column(name = "creado_en", nullable = false, updatable = false)
     private LocalDateTime creadoEn;
 
+    @LastModifiedDate
     @Column(name = "actualizado_en", nullable = false)
     private LocalDateTime actualizadoEn;
 
@@ -47,18 +51,5 @@ public class Usuario {
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "preferencia_id")
     )
-    @Builder.Default
     private Set<Preferencia> preferencias = new HashSet<>();
-
-    @PrePersist
-    void alCrear() {
-        LocalDateTime ahora = LocalDateTime.now();
-        this.creadoEn = ahora;
-        this.actualizadoEn = ahora;
-    }
-
-    @PreUpdate
-    void alActualizar() {
-        this.actualizadoEn = LocalDateTime.now();
-    }
 }
