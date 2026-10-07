@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"receta", "ingrediente"})
 public class RecetaIngrediente {
 
     @EmbeddedId

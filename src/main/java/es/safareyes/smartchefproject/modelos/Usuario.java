@@ -17,7 +17,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"contrasena", "preferencias"})
 public class Usuario {
 
     @Id
