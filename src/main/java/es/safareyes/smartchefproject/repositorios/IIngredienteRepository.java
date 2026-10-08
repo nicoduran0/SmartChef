@@ -9,7 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IIngredienteRepository extends JpaRepository<Ingrediente, Long> {
 
-    boolean existsByNombreIgnoreCase(String nombre);
-
     Page<Ingrediente> findByNombreContainingIgnoreCase(String texto, Pageable pageable);
 }
