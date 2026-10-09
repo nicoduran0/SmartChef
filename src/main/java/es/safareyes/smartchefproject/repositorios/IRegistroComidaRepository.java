@@ -12,10 +12,12 @@ import java.util.List;
 @Repository
 public interface IRegistroComidaRepository extends JpaRepository<RegistroComida, Long> {
 
+    List<RegistroComida> findByUsuarioIdAndFechaBetweenOrderByFechaAsc(Long usuarioId, LocalDate desde, LocalDate hasta);
+
     @Query(nativeQuery = true, value = """
             SELECT DATE_TRUNC('day', rc.fecha)::date AS dia,
                    SUM(COALESCE(
-                       (SELECT SUM(ri.cantidad * i.calorias) / r.raciones
+                       (SELECT SUM(ri.cantidad * i.calorias / r.raciones)
                         FROM recetas_ingredientes ri
                         JOIN ingredientes i ON i.id = ri.ingrediente_id
                         JOIN recetas r ON r.id = ri.receta_id
@@ -30,4 +32,10 @@ public interface IRegistroComidaRepository extends JpaRepository<RegistroComida,
     List<Object[]> calcularCaloriasPorDia(@Param("usuarioId") Long usuarioId,
                                           @Param("desde") LocalDate desde,
                                           @Param("hasta") LocalDate hasta);
+
+    @Query("SELECT rc.receta, COUNT(rc) FROM RegistroComida rc " +
+            "WHERE rc.receta IS NOT NULL AND rc.fecha BETWEEN :desde AND :hasta " +
+            "GROUP BY rc.receta ORDER BY COUNT(rc) DESC")
+    List<Object[]> buscarRecetasMasCocinadas(@Param("desde") LocalDate desde,
+                                             @Param("hasta") LocalDate hasta);
 }
