@@ -16,4 +16,9 @@ public interface IRecetaIngredienteRepository extends JpaRepository<RecetaIngred
             "FROM RecetaIngrediente ri JOIN ri.ingrediente i " +
             "WHERE ri.receta.id = :recetaId")
     BigDecimal calcularCosteTotal(@Param("recetaId") Long recetaId);
+
+    @Query("SELECT SUM(ri.cantidad * i.calorias) " +
+            "FROM RecetaIngrediente ri JOIN ri.ingrediente i " +
+            "WHERE ri.receta.id = :recetaId")
+    BigDecimal calcularCaloriasTotales(@Param("recetaId") Long recetaId);
 }
