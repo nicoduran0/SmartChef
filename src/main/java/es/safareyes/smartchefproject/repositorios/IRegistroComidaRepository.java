@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface IRegistroComidaRepository extends JpaRepository<RegistroComida, Long> {
+public interface IRegistroComidaRepository extends JpaRepository<RegistroComida, Integer> {
 
     List<RegistroComida> findByUsuarioIdAndFechaBetweenOrderByFechaAsc(Long usuarioId, LocalDate desde, LocalDate hasta);
 

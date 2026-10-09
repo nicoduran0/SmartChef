@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IRecetaRepository extends JpaRepository<Receta, Long>, JpaSpecificationExecutor<Receta> {
+public interface IRecetaRepository extends JpaRepository<Receta, Integer>, JpaSpecificationExecutor<Receta> {
 
     Page<Receta> findByActivaTrue(Pageable pageable);
 

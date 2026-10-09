@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IColeccionRepository extends JpaRepository<Coleccion, Long> {
+public interface IColeccionRepository extends JpaRepository<Coleccion, Integer> {
 
     List<Coleccion> findByUsuarioId(Long usuarioId);
 }
