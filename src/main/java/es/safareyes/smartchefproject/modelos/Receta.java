@@ -5,10 +5,10 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "recetas")
@@ -58,5 +58,6 @@ public class Receta {
     private List<RecetaIngrediente> ingredientes = new ArrayList<>();
 
     @OneToMany(mappedBy = "receta")
+    @OrderBy("numero ASC")
     private List<Paso> pasos = new ArrayList<>();
 }
