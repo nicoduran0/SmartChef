@@ -15,6 +15,10 @@ public interface IRecetaRepository extends JpaRepository<Receta, Long>, JpaSpeci
 
     Page<Receta> findByActivaTrue(Pageable pageable);
 
+    boolean existsByAutorIdAndTituloIgnoreCase(Long autorId, String titulo);
+
+    boolean existsByAutorIdAndTituloIgnoreCaseAndIdNot(Long autorId, String titulo, Long id);
+
     @Query("SELECT r FROM Receta r WHERE r.activa = true AND NOT EXISTS (" +
             "SELECT ri FROM RecetaIngrediente ri WHERE ri.receta = r AND ri.ingrediente.vegetariano = false)")
     Page<Receta> buscarVegetarianas(Pageable pageable);
