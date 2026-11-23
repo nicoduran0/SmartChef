@@ -3,6 +3,7 @@ package es.safareyes.smartchefproject.mappers;
 import es.safareyes.smartchefproject.dtos.response.IngredienteRecetaResponse;
 import es.safareyes.smartchefproject.dtos.response.PasoResponse;
 import es.safareyes.smartchefproject.dtos.response.RecetaDetalleResponse;
+import es.safareyes.smartchefproject.dtos.response.RecetaResumenResponse;
 import es.safareyes.smartchefproject.modelos.Paso;
 import es.safareyes.smartchefproject.modelos.Receta;
 import es.safareyes.smartchefproject.modelos.RecetaIngrediente;
@@ -22,6 +23,9 @@ public interface RecetaMapper {
     @Mapping(target = "rapida", ignore = true)
     @Mapping(target = "economica", ignore = true)
     RecetaDetalleResponse toDetalle(Receta receta);
+
+    @Mapping(target = "autor", source = "autor.nombre")
+    RecetaResumenResponse toResumen(Receta receta);
 
     @Mapping(target = "ingredienteId", source = "ingrediente.id")
     @Mapping(target = "nombre", source = "ingrediente.nombre")
