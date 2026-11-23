@@ -1,14 +1,17 @@
 package es.safareyes.smartchefproject.servicios;
 
 import es.safareyes.smartchefproject.dtos.response.RecetaDetalleResponse;
+import es.safareyes.smartchefproject.dtos.response.RecetaResumenResponse;
 import es.safareyes.smartchefproject.excepciones.RecursoNoEncontradoException;
 import es.safareyes.smartchefproject.mappers.RecetaMapper;
+import es.safareyes.smartchefproject.modelos.Dificultad;
 import es.safareyes.smartchefproject.modelos.Receta;
-import es.safareyes.smartchefproject.modelos.RecetaIngrediente;
 import es.safareyes.smartchefproject.repositorios.IRecetaIngredienteRepository;
 import es.safareyes.smartchefproject.repositorios.IRecetaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +29,22 @@ public class RecetaService implements IRecetaService {
     private final IRecetaRepository recetaRepository;
     private final IRecetaIngredienteRepository recetaIngredienteRepository;
     private final RecetaMapper recetaMapper;
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<RecetaResumenResponse> listar(String titulo, Dificultad dificultad, Short tiempoMaximo,
+                                              boolean vegetariana, boolean sinGluten, Pageable pageable) {
+        Page<Receta> pagina;
+        if (vegetariana) {
+            pagina = recetaRepository.buscarVegetarianas(pageable);
+        } else if (sinGluten) {
+            pagina = recetaRepository.buscarSinGluten(pageable);
+        } else {
+            pagina = recetaRepository.findAll(
+                    recetaRepository.conFiltros(titulo, dificultad, tiempoMaximo), pageable);
+        }
+        return pagina.map(recetaMapper::toResumen);
+    }
 
     @Override
     @Transactional(readOnly = true)
