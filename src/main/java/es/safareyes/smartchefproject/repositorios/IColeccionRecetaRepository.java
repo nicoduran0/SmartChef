@@ -10,7 +10,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface IColeccionRecetaRepository extends JpaRepository<ColeccionReceta, Integer> {
+public interface IColeccionRecetaRepository extends JpaRepository<ColeccionReceta, Long> {
+
+    boolean existsByColeccionIdAndRecetaId(Long coleccionId, Long recetaId);
 
     @Query("SELECT cr.receta, COUNT(cr) FROM ColeccionReceta cr " +
             "WHERE cr.agregadaEn BETWEEN :desde AND :hasta " +
