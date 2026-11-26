@@ -28,6 +28,6 @@ public record RegistroRequest(
         @PositiveOrZero(message = "Las calorías no pueden ser negativas")
         Integer calorias,
 
-        boolean descontarDespensa
+        Boolean descontarDespensa
 ) {
 }

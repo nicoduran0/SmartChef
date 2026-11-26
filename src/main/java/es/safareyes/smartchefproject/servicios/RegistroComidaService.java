@@ -77,7 +77,7 @@ public class RegistroComidaService implements IRegistroComidaService {
         }
         registro = registroRepository.save(registro);
 
-        if (receta != null && request.descontarDespensa()) {
+        if (receta != null && Boolean.TRUE.equals(request.descontarDespensa())) {
             descontarDespensa(usuarioId, receta, registro.getRaciones());
         }
 
