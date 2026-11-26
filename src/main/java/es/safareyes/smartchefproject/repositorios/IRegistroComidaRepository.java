@@ -1,5 +1,6 @@
 package es.safareyes.smartchefproject.repositorios;
 
+import es.safareyes.smartchefproject.modelos.MomentoComida;
 import es.safareyes.smartchefproject.modelos.RegistroComida;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +11,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface IRegistroComidaRepository extends JpaRepository<RegistroComida, Integer> {
+public interface IRegistroComidaRepository extends JpaRepository<RegistroComida, Long> {
+
+    boolean existsByUsuarioIdAndFechaAndMomento(Long usuarioId, LocalDate fecha, MomentoComida momento);
 
     List<RegistroComida> findByUsuarioIdAndFechaBetweenOrderByFechaAsc(Long usuarioId, LocalDate desde, LocalDate hasta);
 
